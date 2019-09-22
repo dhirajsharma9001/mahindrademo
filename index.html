@@ -68,6 +68,7 @@
 
         gtag('config', 'AW-824730324');
     </script>-->
+    <script data-cfasync="false" src="js/form-submission-handler.js"></script>
 </head>
 
 <body>
@@ -142,29 +143,50 @@
                 <h3 class="star">3,4 BHK CONFIGURATIONS</h3>
                 <h3>Best Price: ₹ 4.18 Crs</h3>
                 <h4> ₹ 4.18 Crs - 5.42 Crs Price</h4>
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="col-md-6 col-sm-6 col-xs-12 frm1">
-                        <input type="text" class="form-control frm2" id="qSenderName" placeholder="Name">
+                <form class="gform pure-form pure-form-stacked" method="POST" data-email="From Mahindra Luminare"
+                      action="https://script.google.com/macros/s/AKfycbyQEwOmNbpGR-4ldmD8jdG2sKmOsUr7DLga3DMhBApqF7BMZWI/exec">
+
+
+                    <div class="form-elements">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12 frm1">
+                                <input type="text" class="form-control frm2" name="name" id="name" placeholder="Name">
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12 frm1">
+                                <input type="text" class="form-control frm2 isNumberKey" name="mobile" id="mobile" placeholder="Mobile">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 frm1">
+                                <input type="text" class="form-control frm2" id="email" name="email" placeholder="Email Id">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 frm1">
+                                <textarea class="form-control frm2" id="query" name="query" placeholder="Query"></textarea>
+                            </div>
+                            <fieldset class="pure-group honeypot-field" style="display:none;">
+                                <label for="honeypot">To help avoid spam, utilize a Honeypot technique with a hidden text field; must be empty to submit the form! Otherwise, we assume the user is a spam bot.</label>
+                                <input id="honeypot" type="text" name="honeypot" value="" />
+                            </fieldset>
+                            <div class="col-md-12 col-sm-12 col-xs-12 frm1">
+                                <!--<input type="submit" class="form-control frm2 sbmt" onClick="SendQueryData();" value="Submit">-->
+                                <input type="submit" class="form-control frm2 sbmt" value="Submit" style="cursor:pointer">
+                                <!--<button class="btn btn-warning">
+                                    Submit
+                                </button>-->
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 frm1">
-                        <input type="text" class="form-control frm2 isNumberKey" id="qMobileNo" placeholder="Mobile">
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 frm1">
-                        <input type="text" class="form-control frm2" id="qEmailID" placeholder="Email Id">
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 frm1">
-                        <textarea class="form-control frm2" id="qQueryMessage" placeholder="Query"></textarea>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 frm1">
-                        <input type="submit" class="form-control frm2 sbmt" onClick="SendQueryData();" value="Submit">
-                    </div>
+                </form>
+                <div style="display:none;" id="thankyou_message">
+                    <h2>
+                        <em>Thanks</em> for contacting us!
+                        We will get back to you soon!
+                    </h2>
                 </div>
             </div>
         </div>
     </div>
     <br>
     <div class="clearfix"></div>
-    <div class="row overview" id="overview" data-aos="fade-right">
+    <div class="row overview" id="overview" data-aos="fade-right" style="padding-top: 50px;">
         <div class="container">
             <div class="col-xs-12">
                 <h2 class="text-center">
@@ -402,11 +424,11 @@
                 </div>
                 <div class="col-xs-4 pdngg">
                     <div class="mobilesec-inn inn2">
-                        <a href="https://api.whatsapp.com/send?phone=+91-9716841351&amp;text=Hi,%20I'm%20interested%20in%20 MAHINDRA LIFESPACES" ><i class="fa fa-whatsapp"></i> Whats App</a>
+                        <a href="https://api.whatsapp.com/send?phone=+91-9716841351&amp;text=Hi,%20I'm%20interested%20in%20 MAHINDRA LIFESPACES"><i class="fa fa-whatsapp"></i> Whats App</a>
                         <!--<a href="https://api.whatsapp.com/send?phone=+91-9716841351&amp;text=Hello, Looking for Sobha City in Sector 108, Gurgaon. Get in touch with me my name is" class="btn btn-success btn-block">
-                            <i class="fa fa-
-				"></i> Whats App
-                        </a>-->
+                                    <i class="fa fa-
+                        "></i> Whats App
+                                </a>-->
                     </div>
                 </div>
                 <div class="col-xs-4 pdngg">
@@ -526,7 +548,26 @@
         else { alert("Invalid E-mail Address! Please re-enter ?"); elem.focus(); return false; }
     }
 
+    function SendDataToSheet() {
+        debugger;
+        $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbyQEwOmNbpGR-4ldmD8jdG2sKmOsUr7DLga3DMhBApqF7BMZWI/exec",
+            //data: {"entry.2008660880": field1, "entry.1460631936": field2, "entry.904964149": field3, "entry.1878256062": field4},
+            type: "POST",
+            dataType: "xml",
+            success: function (d) {
+                debugger;
+                var result = d;
+            },
+            error: function (x, y, z) {
 
+                $('#success-msg').show();
+                $('#form').hide();
+
+            }
+        });
+        return false;
+    }
 
 
     function SendQueryData() {
@@ -612,9 +653,9 @@
             document.getElementById("qMobileNo2").value = "";
             document.getElementById("qEmailID2").value = "";
             document.getElementById("qQueryMessage2").value = "";
-     < !--window.open('MAHINDRA LUMINARE__SALES.pdf', '_blank'); -->
+ < !--window.open('MAHINDRA LUMINARE__SALES.pdf', '_blank'); -->
 
-  var win = window.open("http://mahindraluminare.book.ind.in/thanks.htm", "popupWindow", "popupWindow", "width=359,height=380,top=150,left=500,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no");
+var win = window.open("http://mahindraluminare.book.ind.in/thanks.htm", "popupWindow", "popupWindow", "width=359,height=380,top=150,left=500,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no");
             setTimeout(function () { win.close() }, 3000);
 
 
@@ -657,16 +698,16 @@
             document.getElementById("qMobileNo3").value = "";
             document.getElementById("qEmailID3").value = "";
             document.getElementById("qQueryMessage3").value = "";
-       < !--window.open('images/Price-list-37D.pdf', '_blank'); -->
+   < !--window.open('images/Price-list-37D.pdf', '_blank'); -->
 
-     var win = window.open("http://mahindraluminare.book.ind.in/thanks.htm", "popupWindow", "popupWindow", "width=359,height=380,top=150,left=500,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no");
+ var win = window.open("http://mahindraluminare.book.ind.in/thanks.htm", "popupWindow", "popupWindow", "width=359,height=380,top=150,left=500,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no");
             setTimeout(function () { win.close() }, 3000);
-   < !--    -->
+< !--    -->
 
 
 
 
-   }
+}
     }
 
 
@@ -704,14 +745,14 @@
             document.getElementById("qQueryMessage4").value = "";
             window.open('Kbana-High-Brochure-2.pdf', '_blank');
 
-    < !-- var win = window.open("http://mahindraluminare.book.ind.in/thanks.htm", "popupWindow", "popupWindow", "width=359,height=380,top=150,left=500,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no");
-     < !--setTimeout(function () { win.close() }, 3000); -->
+< !-- var win = window.open("http://mahindraluminare.book.ind.in/thanks.htm", "popupWindow", "popupWindow", "width=359,height=380,top=150,left=500,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no");
+ < !--setTimeout(function () { win.close() }, 3000); -->
 
 
 
 
 
-   }
+}
     }
 
 
@@ -750,13 +791,13 @@
             document.getElementById("qQueryMessage5").value = "";
             window.open('Kbana-High-Brochure-2.pdf', '_blank');
 
-    < !-- var win = window.open("http://mahindraluminare.book.ind.in/thanks.htm", "popupWindow", "popupWindow", "width=359,height=380,top=150,left=500,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no");
-     < !--setTimeout(function () { win.close() }, 3000); -->
+< !-- var win = window.open("http://mahindraluminare.book.ind.in/thanks.htm", "popupWindow", "popupWindow", "width=359,height=380,top=150,left=500,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no");
+ < !--setTimeout(function () { win.close() }, 3000); -->
 
 
 
 
-   }
+}
     }
 
 
@@ -903,40 +944,49 @@
                 <h6 style="text-align:center; color:#fff;font-size:16px;">Sector 59, Gurugram<span style="font-size:13px;"></span></h6>
             </div>
             <div class="modal-body inq-form">
-                <form>
-                    <div class="form-group">
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="name" id="qSenderName2" required placeholder="Enter your Name" />
+                <form class="gform" method="POST" data-email="From Mahindra Luminare" action="https://script.google.com/macros/s/AKfycbyQEwOmNbpGR-4ldmD8jdG2sKmOsUr7DLga3DMhBApqF7BMZWI/exec">
+                    <div class="form-elements">
+                        <div class="form-group">
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="name" id="name" required placeholder="Enter your Name" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-mobile fa-2" aria-hidden="true" style="font-size: 21px;"></i></span>
-                                <input type="text" class="form-control isNumberKey" name="phone" id="qMobileNo2" required placeholder="Enter your Number" />
+                        <div class="form-group">
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-mobile fa-2" aria-hidden="true" style="font-size: 21px;"></i></span>
+                                    <input type="text" class="form-control isNumberKey" name="mobile" id="mobile" required placeholder="Enter your Number" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="email" id="qEmailID2" required placeholder="Enter your Email" />
+                        <div class="form-group">
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="email" id="email" required placeholder="Enter your Email" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-pencil fa-1" aria-hidden="true"></i></span>
-                                <textarea class="form-control" id="qQueryMessage2" required placeholder="Message"></textarea>
+                        <div class="form-group">
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-pencil fa-1" aria-hidden="true"></i></span>
+                                    <textarea class="form-control" id="query" name="query" required placeholder="Message"></textarea>
+                                </div>
                             </div>
                         </div>
+                        <fieldset class="pure-group honeypot-field" style="display:none;">
+                            <label for="honeypot">To help avoid spam, utilize a Honeypot technique with a hidden text field; must be empty to submit the form! Otherwise, we assume the user is a spam bot.</label>
+                            <input id="honeypot" type="text" name="honeypot" value="" />
+                        </fieldset>
+                        <div class="form-group ">
+                            <input type="submit" class="form-control frm2 sbmt" value="Submit" style="cursor:pointer">
+                            <!--<a href="#" type="SUBMIT" onclick="SendQueryData2()" id="button" class="btn btn-primary btn-lg btn-block login-button" style="background-color:#000">SUBMIT</a>-->
+                        </div>
                     </div>
-                    <div class="form-group "><a href="#" type="SUBMIT" onclick="SendQueryData2()" id="button" class="btn btn-primary btn-lg btn-block login-button" style="background-color:#000">SUBMIT</a></div>
                 </form>
             </div>
         </div>
